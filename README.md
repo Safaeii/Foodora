@@ -1,32 +1,98 @@
-# React + TypeScript + Vite
+# 🍽️ Foodora
+## 📸 Screenshots
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+### Home Page
+![Home Page](./screenshots/home.png)
 
-Currently, two official plugins are available:
+### Recipes
+![Recipes](./screenshots/recipes.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Recipe Details
+![Recipe Details](./screenshots/recipe-details.png)
 
-## React Compiler
+### Community
+![Community](./screenshots/community.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Top Chefs
+![Top Chefs](./screenshots/dashbord.png)
 
-## Expanding the Oxlint configuration
+### Login
+![Login](./screenshots/login.png)
+### A Modern Cooking & Recipe Sharing Platform
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Foodora is a modern, responsive cooking platform built with **React, TypeScript, and Vite**. It provides a friendly space for discovering recipes, exploring cooking ideas, and sharing culinary experiences.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## ✨ Features
+
+- Browse recipes across different food categories
+- View detailed recipe information
+- Search and explore recipes
+- Discover top chefs
+- Join the cooking community
+- Participate in weekly cooking challenges
+- Read and share recipe reviews
+- User registration and login interfaces
+- Responsive design for desktop and mobile devices
+
+## 🛠️ Tech Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Lucide React
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Safaeii/Foodora.git
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 2. Navigate to the project
+
+```bash
+cd Foodora
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+Open the local URL shown in your terminal to view the application.
+
+## 📁 Project Structure
+
+```text
+src/
+├── components/
+├── pages/
+├── assets/
+├── types/
+├── App.tsx
+└── main.tsx
+```
+
+## 🎨 Design
+
+Foodora uses a warm, modern visual identity with a carefully selected color palette, clean layouts, and responsive components to create an enjoyable cooking experience.
+
+## 👩‍💻 Developer
+
+**Safaeii**
+
+- GitHub: [@Safaeii](https://github.com/Safaeii)
+
+---
+
+Made with ❤️ and passion for cooking.
