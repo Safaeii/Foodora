@@ -1,0 +1,60 @@
+
+@import "tailwindcss";
+
+/* رنگ‌های اصلی سایت */
+:root {
+  --color-background: #F7F3E8;
+  --color-primary: #526B45;
+  --color-secondary: #E98945;
+  --color-card: #FFFFFF;
+  --color-text: #292D26;
+  --color-muted: #817F73;
+  --color-border: #E6E0D3;
+
+  /* فونت */
+  font-family: "Vazirmatn", Tahoma, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-background);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
