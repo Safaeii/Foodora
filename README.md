@@ -5,7 +5,8 @@
 ![Home Page](./screenshots/home.png)
 
 ### Recipes
-![Recipes](./screenshots/recipes.png)
+
+![Login](./screenshots/login.png)
 
 ### Recipe Details
 ![Recipe Details](./screenshots/recipe-details.png)
@@ -13,11 +14,11 @@
 ### Community
 ![Community](./screenshots/community.png)
 
-### Top Chefs
+### Dashbord
 ![Top Chefs](./screenshots/dashbord.png)
 
 ### Login
-![Login](./screenshots/login.png)
+![Recipes](./screenshots/recipes.png)
 ### A Modern Cooking & Recipe Sharing Platform
 
 Foodora is a modern, responsive cooking platform built with **React, TypeScript, and Vite**. It provides a friendly space for discovering recipes, exploring cooking ideas, and sharing culinary experiences.
