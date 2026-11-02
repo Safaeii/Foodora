@@ -18,6 +18,8 @@ import Login from "./pages/login";
 import CommunityRecipes from "./pages/CommunityRecipes";
 import CommunityRecipeDetails from "./pages/CommunityRecipeDetails";
 
+import Dashboard from "./pages/Dashboard";
+
 function App() {
   return (
     <>
@@ -49,6 +51,8 @@ function App() {
           path="/community/recipes/:id"
           element={<CommunityRecipeDetails />}
         />
+        {/* dashbord */}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );

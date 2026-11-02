@@ -1,118 +1,167 @@
 
 import { Link } from "react-router-dom";
+import {
+  Plus,
+  Trophy,
+  Heart,
+  Bookmark,
+  Flame,
+  ChefHat,
+  ArrowLeft,
+  Sparkles,
+} from "lucide-react";
 
 function CommunityHero() {
   return (
-    <section className="overflow-hidden bg-[#F7F3E8] px-5 py-16 sm:px-10 lg:py-24">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+    <section className="bg-[#F7F3E8] px-5 pb-14 pt-10 sm:px-10">
+      <div className="mx-auto max-w-7xl">
 
-        {/* Content */}
-        <div className="text-right">
-
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#526B45]/10 px-5 py-2 text-sm font-bold text-[#526B45]">
-            <span>🌿</span>
-            جامعه دوست‌داران آشپزی
-          </span>
-
-          <h1 className="text-4xl font-black leading-[1.7] text-[#292D26] sm:text-5xl lg:text-6xl">
-            طعم خلاقیت،
-            <br />
-            <span className="text-[#526B45]">
-              اشتراک‌گذاری
+        {/* Hero */}
+        <div className="relative overflow-hidden rounded-[32px] bg-[#526B45] p-8 text-white md:p-14">
+          <div className="relative z-10 max-w-2xl">
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm text-white">
+              <Sparkles size={16} />
+              جامعه آشپزهای Foodora
             </span>
-            <br />
-            تجربه‌ها
-          </h1>
 
-          <p className="mt-6 max-w-lg text-base leading-9 text-[#817F73] sm:text-lg">
-            دستورهای آشپزی خودت رو با دیگران به اشتراک بذار،
-            از تجربه آشپزهای دیگه یاد بگیر و هر روز طعم جدیدی
-            رو کشف کن.
-          </p>
+            <h1 className="mb-5 text-3xl font-black leading-relaxed sm:text-5xl">
+              آشپزی کن،
+              <br />
+              تجربه‌ات رو به اشتراک بذار!
+            </h1>
 
-          {/* Buttons */}
-          <div className="mt-9 flex flex-wrap gap-4">
+            <p className="mb-8 max-w-xl text-sm leading-8 text-white/80 sm:text-base">
+              دستورهای خوشمزه‌ات رو با دیگران به اشتراک بذار،
+              از تجربه آشپزهای دیگه یاد بگیر و بخشی از
+              دنیای خوشمزه Foodora باش.
+            </p>
 
             <Link
               to="/register"
-              className="rounded-2xl bg-[#526B45] px-7 py-4 font-bold text-white shadow-lg shadow-[#526B45]/20 transition duration-300 hover:-translate-y-1 hover:bg-[#405638]"
+              className="inline-flex items-center gap-3 rounded-xl bg-[#E98945] px-6 py-3.5 font-bold text-white transition hover:bg-[#d97835]"
             >
-              شروع آشپزی و عضویت
-              <span className="mr-2">←</span>
+              شروع آشپزی
+              <ArrowLeft size={18} />
             </Link>
-
-            <a
-              href="#recipes"
-              className="rounded-2xl border border-[#526B45]/30 bg-white px-7 py-4 font-bold text-[#526B45] transition duration-300 hover:-translate-y-1 hover:bg-[#526B45]/5"
-            >
-              کشف دستورها
-            </a>
-
           </div>
 
-          {/* Features */}
-          <div className="mt-12 flex flex-wrap gap-7">
-
-            <div>
-              <p className="text-2xl font-black text-[#526B45]">
-                🍽
-              </p>
-              <span className="mt-2 block text-sm text-[#817F73]">
-                دستورهای متنوع
-              </span>
-            </div>
-
-            <div>
-              <p className="text-2xl font-black text-[#526B45]">
-                ❤️
-              </p>
-              <span className="mt-2 block text-sm text-[#817F73]">
-                اشتراک‌گذاری علاقه
-              </span>
-            </div>
-
-            <div>
-              <p className="text-2xl font-black text-[#526B45]">
-                👩‍🍳
-              </p>
-              <span className="mt-2 block text-sm text-[#817F73]">
-                ارتباط با آشپزها
-              </span>
-            </div>
-
+          <div className="pointer-events-none absolute -bottom-20 -right-10 text-white/10">
+            <ChefHat size={320} strokeWidth={1} />
           </div>
+
+          <div className="absolute right-8 top-8 h-24 w-24 rounded-full bg-white/5 blur-2xl" />
         </div>
 
-        {/* Image */}
-        <div className="relative mx-auto w-full max-w-xl">
+        {/* Main Actions */}
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
 
-          <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#E98945]/20 blur-3xl" />
+          <Link
+            to="/register"
+            className="group flex items-center justify-between rounded-3xl border border-[#E6E0D3] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
+          >
+            <div>
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E98945]/15 text-[#E98945]">
+                <Plus size={28} />
+              </div>
 
-          <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-[#526B45]/20 blur-3xl" />
+              <h2 className="text-xl font-black text-[#292D26]">
+                ثبت دستور جدید
+              </h2>
 
-          <div className="relative overflow-hidden rounded-[2.5rem] border-8 border-white shadow-2xl">
+              <p className="mt-2 text-sm leading-7 text-[#817F73]">
+                دستور غذای اختصاصی خودت رو با دیگران به اشتراک بذار.
+              </p>
+            </div>
 
-            <img
-              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1000"
-              alt="غذای سالم و خوشمزه"
-              className="h-[350px] w-full object-cover sm:h-[480px]"
+            <ArrowLeft
+              className="text-[#526B45] transition group-hover:-translate-x-2"
+              size={24}
             />
+          </Link>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          <a
+            href="#top-users"
+            className="group flex items-center justify-between rounded-3xl border border-[#E6E0D3] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
+          >
+            <div>
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#526B45]/10 text-[#526B45]">
+                <Trophy size={28} />
+              </div>
 
-            <div className="absolute bottom-6 right-6 left-6 rounded-2xl border border-white/30 bg-white/90 p-5 shadow-xl backdrop-blur-md">
-              <p className="text-sm font-medium text-[#817F73]">
-                آشپزی یعنی به اشتراک گذاشتن عشق ❤️
+              <h2 className="text-xl font-black text-[#292D26]">
+                آشپزهای برتر
+              </h2>
+
+              <p className="mt-2 text-sm leading-7 text-[#817F73]">
+                با خلاق‌ترین و فعال‌ترین اعضای Foodora آشنا شو.
               </p>
-
-              <h3 className="mt-2 text-xl font-black text-[#292D26]">
-                هر غذا، یک داستان تازه!
-              </h3>
             </div>
 
-          </div>
+            <ArrowLeft
+              className="text-[#526B45] transition group-hover:-translate-x-2"
+              size={24}
+            />
+          </a>
         </div>
 
+        {/* Quick Access */}
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+          <a
+            href="#recipes"
+            className="flex items-center gap-4 rounded-2xl border border-[#E6E0D3] bg-white p-5 transition hover:border-[#E98945]"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-red-500">
+              <Heart size={23} />
+            </div>
+
+            <div>
+              <h3 className="font-bold text-[#292D26]">
+                دستورهای محبوب
+              </h3>
+              <p className="mt-1 text-xs text-[#817F73]">
+                پرطرفدارترین غذاها
+              </p>
+            </div>
+          </a>
+
+          <a
+            href="#saved-recipes"
+            className="flex items-center gap-4 rounded-2xl border border-[#E6E0D3] bg-white p-5 transition hover:border-[#E98945]"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+              <Bookmark size={23} />
+            </div>
+
+            <div>
+              <h3 className="font-bold text-[#292D26]">
+                دستورهای ذخیره‌شده
+              </h3>
+              <p className="mt-1 text-xs text-[#817F73]">
+                غذاهای مورد علاقه‌ات
+              </p>
+            </div>
+          </a>
+
+          <a
+            href="#weekly-challenge"
+            className="flex items-center gap-4 rounded-2xl border border-[#E6E0D3] bg-white p-5 transition hover:border-[#E98945]"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#E98945]">
+              <Flame size={23} />
+            </div>
+
+            <div>
+              <h3 className="font-bold text-[#292D26]">
+                چالش هفتگی
+              </h3>
+              <p className="mt-1 text-xs text-[#817F73]">
+                چالش جدید آشپزی
+              </p>
+            </div>
+          </a>
+
+        </div>
       </div>
     </section>
   );
