@@ -22,6 +22,10 @@ import CommunityRecipeDetails from "./pages/CommunityRecipeDetails";
 
 import Dashboard from "./pages/Dashboard";
 
+import WeeklyChallenge from "./pages/WeeklyChallenge";
+
+import TopChefs from "./pages/TopChefs";
+
 function App() {
   return (
     <>
@@ -55,7 +59,12 @@ function App() {
         />
         {/* dashbord */}
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* Weekly Challenge */}
+<Route path="/weekly-challenge" element={<WeeklyChallenge />} />
+
+<Route path="/TopChefs" element={<TopChefs />} />
       </Routes>
+     
       <Footer />
     </>
   );

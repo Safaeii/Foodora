@@ -76,11 +76,11 @@ function CommunityHero() {
   return () => clearInterval(interval);
 }, []);
   return (
-    <section className="bg-[#F7F3E8] px-5 pb-14 pt-10 sm:px-10">
+    <section  id="community" className="bg-[#F7F3E8] px-5 pb-14 pt-10 sm:px-10 scroll-mt-24">
       <div className="mx-auto max-w-7xl">
 
         {/* Slider */}
-        <div className="relative overflow-hidden rounded-[32px] bg-[#354B32] shadow-xl">
+        <div   className="relative overflow-hidden rounded-[32px] bg-[#354B32] shadow-xl">
 
           {/* Background image */}
           <div className="absolute inset-0">
@@ -174,81 +174,108 @@ function CommunityHero() {
             ))}
           </div>
         </div>
+{/* Main Actions */}
+<div className="mt-8 grid gap-5 md:grid-cols-2">
 
-        {/* Main Actions */}
-        <div className="mt-8 grid gap-5 md:grid-cols-2">
+  {/* Add Recipe */}
+  <Link
+    to="/register"
+    className="group relative flex items-center justify-between overflow-hidden rounded-3xl border border-[#E98945]/20 bg-gradient-to-l from-[#E98945] to-[#F2A66D] p-6 text-white shadow-md shadow-[#E98945]/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#E98945]/20 sm:p-8"
+  >
+    {/* Background Effects */}
+    <div className="pointer-events-none absolute -left-12 -top-12 h-40 w-40 rounded-full bg-white/15 blur-3xl" />
+    <div className="pointer-events-none absolute -bottom-16 right-1/3 h-40 w-40 rounded-full bg-[#9C542C]/20 blur-3xl" />
 
-          <Link
-            to="/register"
-            className="group flex items-center justify-between rounded-3xl border border-[#E6E0D3] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
-          >
-            <div>
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E98945]/15 text-[#E98945]">
-                <Plus size={28} />
-              </div>
+    <div className="relative">
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-white shadow-inner backdrop-blur-sm transition duration-300 group-hover:rotate-6 group-hover:scale-110">
+        <Plus size={28} />
+      </div>
 
-              <h2 className="text-xl font-black text-[#292D26]">
-                ثبت دستور جدید
-              </h2>
+      <h2 className="text-xl font-black text-white">
+        ثبت دستور جدید
+      </h2>
 
-              <p className="mt-2 text-sm leading-7 text-[#817F73]">
-                دستور غذای اختصاصی خودت رو با دیگران به اشتراک بذار.
-              </p>
-            </div>
+      <p className="mt-2 max-w-xs text-sm leading-7 text-white/85">
+        دستور غذای اختصاصی خودت رو با دیگران به اشتراک بذار.
+      </p>
+    </div>
 
-            <ArrowLeft
-              className="text-[#526B45] transition group-hover:-translate-x-2"
-              size={24}
-            />
-          </Link>
+    <ArrowLeft
+      className="relative mr-4 shrink-0 text-white transition duration-300 group-hover:-translate-x-2"
+      size={24}
+    />
+  </Link>
 
-          <a
-            href="#top-users"
-            className="group flex items-center justify-between rounded-3xl border border-[#E6E0D3] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg sm:p-8"
-          >
-            <div>
-              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#526B45]/10 text-[#526B45]">
-                <Trophy size={28} />
-              </div>
+  {/* Top Chefs */}
+  <Link
+    to="/TopChefs"
+    className="group relative flex items-center justify-between overflow-hidden rounded-3xl border border-[#526B45]/20 bg-gradient-to-l from-[#526B45] to-[#789064] p-6 text-white shadow-md shadow-[#526B45]/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#526B45]/20 sm:p-8"
+  >
+    {/* Background Effects */}
+    <div className="pointer-events-none absolute -left-12 -top-12 h-40 w-40 rounded-full bg-white/15 blur-3xl" />
+    <div className="pointer-events-none absolute -bottom-16 right-1/3 h-40 w-40 rounded-full bg-[#D5E5B8]/20 blur-3xl" />
 
-              <h2 className="text-xl font-black text-[#292D26]">
-                آشپزهای برتر
-              </h2>
+    <div className="relative">
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-white shadow-inner backdrop-blur-sm transition duration-300 group-hover:rotate-6 group-hover:scale-110">
+        <Trophy size={28} />
+      </div>
 
-              <p className="mt-2 text-sm leading-7 text-[#817F73]">
-                با خلاق‌ترین و فعال‌ترین اعضای Foodora آشنا شو.
-              </p>
-            </div>
+      <h2 className="text-xl font-black text-white">
+        آشپزهای برتر
+      </h2>
 
-            <ArrowLeft
-              className="text-[#526B45] transition group-hover:-translate-x-2"
-              size={24}
-            />
-          </a>
-        </div>
+      <p className="mt-2 max-w-xs text-sm leading-7 text-white/85">
+        با خلاق‌ترین و فعال‌ترین اعضای Foodora آشنا شو.
+      </p>
+    </div>
 
-        {/* Weekly Challenge */}
-        <div className="mt-8">
-          <a
-            href="#weekly-challenge"
-            className="flex items-center gap-5 rounded-3xl border border-[#E6E0D3] bg-white p-6 transition hover:border-[#E98945] hover:shadow-md"
-          >
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-orange-50 text-[#E98945]">
-              <Flame size={27} />
-            </div>
+    <ArrowLeft
+      className="relative mr-4 shrink-0 text-white transition duration-300 group-hover:-translate-x-2"
+      size={24}
+    />
+  </Link>
 
-            <div>
-              <h3 className="font-black text-[#292D26]">
-                چالش هفتگی
-              </h3>
-              <p className="mt-1 text-sm text-[#817F73]">
-                در چالش جدید آشپزی شرکت کن.
-              </p>
-            </div>
+</div>
+      {/* Weekly Challenge */}
+<div className="mt-8">
+  <Link
+    to="/weekly-challenge"
+    className="group relative flex items-center gap-5 overflow-hidden rounded-3xl border border-[#526B45]/20 bg-gradient-to-l from-[#526B45] via-[#637D50] to-[#E98945] p-6 text-white shadow-md shadow-[#526B45]/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#526B45]/20"
+  >
+    {/* Background Effects */}
+    <div className="pointer-events-none absolute -left-10 -top-12 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
 
-            <ArrowLeft className="mr-auto text-[#526B45]" size={22} />
-          </a>
-        </div>
+    <div className="pointer-events-none absolute -bottom-12 right-1/3 h-32 w-32 rounded-full bg-[#FFC078]/20 blur-2xl" />
+
+    {/* Icon */}
+    <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-white shadow-inner backdrop-blur-sm transition duration-300 group-hover:rotate-6 group-hover:scale-110">
+      <Flame size={27} />
+    </div>
+
+    {/* Content */}
+    <div className="relative">
+      <div className="mb-1 flex items-center gap-2">
+        <h3 className="font-black text-white">
+          چالش هفتگی
+        </h3>
+
+        <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
+          جدید
+        </span>
+      </div>
+
+      <p className="text-sm leading-6 text-white/80">
+        در چالش جدید آشپزی شرکت کن و خلاقیتت رو نشون بده.
+      </p>
+    </div>
+
+    {/* Arrow */}
+    <ArrowLeft
+      className="relative mr-auto shrink-0 text-white transition duration-300 group-hover:-translate-x-2"
+      size={22}
+    />
+  </Link>
+</div>
 
       </div>
     </section>

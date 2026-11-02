@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import type { Meal } from "../types/meal";
+import RecipeReviews from "../components/RecipeReviews";
 
 function MealDetails() {
   const { id } = useParams();
@@ -230,6 +231,7 @@ function MealDetails() {
         </p>
 
       </div>
+        <RecipeReviews />
     </main>
   );
 }

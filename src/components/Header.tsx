@@ -126,12 +126,12 @@ export default function Header() {
             )}
           </div>
 
-          <Link
-            to="/community"
+          <a
+           href="/#community"
             className="whitespace-nowrap rounded-full px-4 py-3 text-sm font-semibold text-[#292D26] transition hover:bg-[#526B45]/10 hover:text-[#526B45]"
           >
-            دستورهای کاربران
-          </Link>
+        تجربه آشپزها   
+          </a>
         </nav>
 
         {/* Desktop Search */}
