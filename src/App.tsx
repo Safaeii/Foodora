@@ -8,6 +8,8 @@ import BeefMeals from "./components/BeefMeals";
 import SeafoodMeals from "./components/SeafoodMeals";
 import VegetarianMeals from "./components/VegetarianMeals";
 import DessertMeals from "./components/DessertMeals";
+import Footer from "./components/Footer";
+
 
 import MealDetails from "./pages/MealDetails";
 import SearchResults from "./pages/SearchResults";
@@ -54,6 +56,7 @@ function App() {
         {/* dashbord */}
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Footer />
     </>
   );
 }

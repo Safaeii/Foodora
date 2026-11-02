@@ -1,13 +1,27 @@
 
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  ChefHat,
+  Search,
+  UserRound,
+  Menu,
+  X,
+  ChevronDown,
+  Drumstick,
+  Beef,
+  Salad,
+  Fish,
+  CakeSlice,
+
+} from "lucide-react";
 
 const categories = [
-  { name: "مرغ", path: "/chicken", emoji: "🍗" },
-  { name: "گوشت", path: "/beef", emoji: "🥩" },
-  { name: "سبزیجات", path: "/vegetarian", emoji: "🥦" },
-  { name: "غذاهای دریایی", path: "/seafood", emoji: "🐟" },
-  { name: "دسر", path: "/desserts", emoji: "🍰" },
+  { name: "مرغ", path: "/chicken", icon: Drumstick },
+  { name: "گوشت", path: "/beef", icon: Beef },
+  { name: "سبزیجات", path: "/vegetarian", icon: Salad },
+  { name: "غذاهای دریایی", path: "/seafood", icon: Fish },
+  { name: "دسر", path: "/desserts", icon: CakeSlice },
 ];
 
 export default function Header() {
@@ -30,31 +44,31 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E6E0D3] bg-[#FFFEFC]/95 shadow-sm backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center gap-5 px-4 py-4 lg:px-8">
+    <header dir="rtl" className="sticky top-0 z-50 px-4 pt-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-full border border-white/80 bg-[#FFFEFC]/90 px-5 py-3 shadow-[0_12px_35px_rgba(62,66,43,0.10)] backdrop-blur-2xl lg:px-6">
 
         {/* Logo */}
         <Link to="/" className="group flex shrink-0 items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#526B45] text-2xl text-white shadow-lg transition group-hover:rotate-6">
-            🍳
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#526B45] text-white shadow-md transition duration-300 group-hover:rotate-6">
+            <ChefHat size={26} strokeWidth={1.8} />
           </div>
 
           <div>
-            <h1 className="text-xl font-black text-[#292D26]">
+            <h1 className="text-xl font-black tracking-tight text-[#292D26]">
               Foodora
             </h1>
-            <p className="text-[10px] font-semibold text-[#E98945]">
+            <p className="mt-0.5 text-[10px] font-medium text-[#817F73]">
               طعم زندگی، با آشپزی
             </p>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-2 lg:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
 
           <Link
             to="/"
-            className="rounded-xl px-3 py-2.5 text-sm font-bold text-[#526B45] hover:bg-[#F7F3E8]"
+            className="whitespace-nowrap rounded-full bg-[#526B45]/10 px-4 py-3 text-sm font-bold text-[#526B45] transition hover:bg-[#526B45] hover:text-white"
           >
             خانه
           </Link>
@@ -68,90 +82,86 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setShowCategories(!showCategories)}
-              className="flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-[#292D26] hover:bg-[#F7F3E8]"
+              className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-3 text-sm font-semibold transition ${
+                showCategories
+                  ? "bg-[#526B45] text-white"
+                  : "text-[#292D26] hover:bg-[#526B45]/10"
+              }`}
             >
               دسته‌بندی‌ها
-              <span className="text-xs">⌄</span>
+
+              <ChevronDown
+                size={16}
+                className={`transition-transform ${
+                  showCategories ? "rotate-180" : ""
+                }`}
+              />
             </button>
 
             {showCategories && (
               <div className="absolute right-0 top-full z-50 w-60 pt-3">
-                <div className="rounded-2xl border border-[#E6E0D3] bg-white p-2 shadow-xl">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.path}
-                      to={category.path}
-                      onClick={() => setShowCategories(false)}
-                      className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-[#292D26] hover:bg-[#F7F3E8]"
-                    >
-                      <span className="text-xl">{category.emoji}</span>
-                      {category.name}
-                    </Link>
-                  ))}
+                <div className="rounded-3xl border border-[#E6E0D3] bg-[#FFFEFC] p-3 shadow-xl">
+                  {categories.map((category) => {
+                    const Icon = category.icon;
+
+                    return (
+                      <Link
+                        key={category.path}
+                        to={category.path}
+                        onClick={() => setShowCategories(false)}
+                        className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-[#292D26] transition hover:bg-[#F7F3E8] hover:text-[#526B45]"
+                      >
+                        <Icon
+                          size={20}
+                          strokeWidth={1.8}
+                          className="text-[#526B45]"
+                        />
+
+                        {category.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
             )}
           </div>
 
-          {/* Community */}
           <Link
             to="/community"
-            className="rounded-xl px-3 py-2.5 text-sm font-semibold text-[#292D26] transition-colors hover:bg-[#F7F3E8] hover:text-[#E98945]"
+            className="whitespace-nowrap rounded-full px-4 py-3 text-sm font-semibold text-[#292D26] transition hover:bg-[#526B45]/10 hover:text-[#526B45]"
           >
             دستورهای کاربران
           </Link>
-
         </nav>
 
         {/* Desktop Search */}
         <form
           onSubmit={handleSearch}
-          className="mx-auto hidden h-12 max-w-md flex-1 items-center gap-3 rounded-2xl border border-[#E6E0D3] bg-[#F7F3E8] px-4 transition focus-within:border-[#526B45] focus-within:ring-2 focus-within:ring-[#526B45]/10 md:flex"
+          className="hidden h-11 max-w-[230px] flex-1 items-center gap-3 rounded-full border border-[#E6E0D3] bg-white/60 px-4 transition focus-within:border-[#526B45] xl:flex"
         >
-          <svg
-            className="h-5 w-5 shrink-0 text-[#526B45]"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m16 16 4 4" />
-          </svg>
+          <Search size={19} className="shrink-0 text-[#526B45]" />
 
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="چی دوست داری بپزی؟ جست‌وجو کن..."
-            className="w-full bg-transparent text-sm text-[#292D26] outline-none placeholder:text-[#817F73]"
+            placeholder="چی دوست داری بپزی؟"
+            className="w-full min-w-0 bg-transparent text-sm text-[#292D26] outline-none placeholder:text-[#817F73]"
           />
-
-          <button
-            type="submit"
-            className="shrink-0 rounded-xl bg-[#526B45] px-5 py-2 text-sm font-bold text-white transition hover:bg-[#405638]"
-          >
-            جستجو
-          </button>
         </form>
 
-        {/* User Login */}
-        <Link
-          to="/login"
-          className="hidden shrink-0 items-center gap-2 rounded-xl bg-[#526B45] px-5 py-3 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#405638] md:flex"
-        >
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
+        {/* Desktop Actions */}
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
+        
+
+          <Link
+            to="/login"
+            className="flex items-center gap-2 whitespace-nowrap rounded-full bg-[#171713] px-5 py-3 text-sm font-bold text-white shadow-lg transition duration-300 hover:-translate-y-0.5 hover:bg-[#526B45]"
           >
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
-          </svg>
-          ورود / ثبت‌نام
-        </Link>
+            <UserRound size={18} />
+            ورود / ثبت‌نام
+          </Link>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -159,81 +169,94 @@ export default function Header() {
           onClick={() => setIsOpen(!isOpen)}
           aria-label="منو"
           aria-expanded={isOpen}
-          className="mr-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#526B45] text-xl text-white md:hidden"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#526B45] text-white transition hover:bg-[#405638] lg:hidden"
         >
-          {isOpen ? "✕" : "☰"}
+          {isOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
-
       </div>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="border-t border-[#E6E0D3] bg-white px-4 py-5 md:hidden">
+        <div className="mx-auto mt-3 max-w-7xl rounded-3xl border border-[#E6E0D3] bg-[#FFFEFC] p-5 shadow-xl backdrop-blur-xl lg:hidden">
 
           {/* Mobile Search */}
-          <form onSubmit={handleSearch} className="mb-5 flex gap-2">
+          <form
+            onSubmit={handleSearch}
+            className="mb-5 flex items-center gap-2 rounded-2xl border border-[#E6E0D3] bg-[#F7F3E8] p-2"
+          >
+            <Search size={19} className="mr-2 shrink-0 text-[#526B45]" />
+
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="دنبال چه غذایی هستی؟"
-              className="min-w-0 flex-1 rounded-xl border border-[#E6E0D3] bg-[#F7F3E8] px-3 py-3 text-sm outline-none focus:border-[#526B45]"
+              className="min-w-0 flex-1 bg-transparent px-2 py-2 text-sm outline-none"
             />
 
             <button
               type="submit"
-              className="rounded-xl bg-[#526B45] px-4 text-sm font-bold text-white"
+              className="rounded-xl bg-[#526B45] px-4 py-2.5 text-sm font-bold text-white"
             >
-              جست‌وجو
+              جستجو
             </button>
           </form>
 
-          {/* Home */}
-          <Link
-            to="/"
-            onClick={() => setIsOpen(false)}
-            className="mb-2 block rounded-xl bg-[#F7F3E8] p-3 font-bold text-[#526B45]"
-          >
-            🏠 صفحه اصلی
-          </Link>
+          {/* Main Links */}
+          <div className="space-y-2">
+            <Link
+              to="/"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 rounded-2xl bg-[#F7F3E8] p-3 font-bold text-[#526B45]"
+            >
+              <ChefHat size={19} />
+              صفحه اصلی
+            </Link>
 
-          {/* Community */}
-          <Link
-            to="/community"
-            onClick={() => setIsOpen(false)}
-            className="mb-2 block rounded-xl bg-[#F7F3E8] p-3 font-bold text-[#526B45]"
-          >
-            🍽️ دستورهای کاربران
-          </Link>
+            <Link
+              to="/community"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 rounded-2xl p-3 font-semibold text-[#292D26] transition hover:bg-[#F7F3E8]"
+            >
+              <Salad size={19} />
+              دستورهای کاربران
+            </Link>
+          </div>
 
-          {/* Categories */}
-          <p className="mb-3 mt-5 text-sm font-black text-[#526B45]">
+          <div className="my-5 border-t border-[#E6E0D3]" />
+
+          {/* Mobile Categories */}
+          <p className="mb-3 text-sm font-black text-[#526B45]">
             دسته‌بندی غذاها
           </p>
 
           <div className="grid grid-cols-2 gap-2">
-            {categories.map((category) => (
-              <Link
-                key={category.path}
-                to={category.path}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 rounded-xl bg-[#F7F3E8] p-3 text-sm font-bold text-[#292D26]"
-              >
-                {category.emoji}
-                {category.name}
-              </Link>
-            ))}
+            {categories.map((category) => {
+              const Icon = category.icon;
+
+              return (
+                <Link
+                  key={category.path}
+                  to={category.path}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 rounded-2xl bg-[#F7F3E8] p-3 text-sm font-semibold text-[#292D26] transition hover:bg-[#526B45]/10"
+                >
+                  <Icon size={19} className="text-[#526B45]" />
+                  {category.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Login */}
           <Link
             to="/login"
             onClick={() => setIsOpen(false)}
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-[#526B45] p-4 font-bold text-white"
+            className="mt-5 flex items-center justify-center gap-2 rounded-full bg-[#171713] p-4 font-bold text-white transition hover:bg-[#526B45]"
           >
+            <UserRound size={19} />
             ورود / ثبت‌نام
           </Link>
-
         </div>
       )}
     </header>
