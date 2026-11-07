@@ -44,8 +44,9 @@ export default function Header() {
     setSearch("");
     setIsOpen(false);
   }
-const { favorites } = useFavorites();
-const favoritesCount = favorites.length;
+const { favorites, communityFavorites } = useFavorites();
+
+const favoritesCount = favorites.length + communityFavorites.length;
   return (
     <header dir="rtl" className="sticky top-0 z-50 px-4 pt-4">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-full border border-white/80 bg-[#FFFEFC]/90 px-5 py-3 shadow-[0_12px_35px_rgba(62,66,43,0.10)] backdrop-blur-2xl lg:px-6">
