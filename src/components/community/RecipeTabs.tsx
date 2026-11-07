@@ -1,38 +1,53 @@
 
+
+import { Flame, Clock3, Wallet } from "lucide-react";
+
 interface RecipeTabsProps {
   activeTab: string;
-  onChange: (tab: string) => void;
+  setActiveTab: (tab: string) => void;
 }
 
 const tabs = [
-  { id: "all", label: "همه دستورها", icon: "🍽️" },
-  { id: "popular", label: "پرطرفدارترین", icon: "🔥" },
-  { id: "latest", label: "جدیدترین", icon: "✨" },
-  { id: "budget", label: "اقتصادی‌ترین", icon: "💰" },
-  { id: "quick", label: "سریع‌ترین", icon: "⚡" },
-  { id: "healthy", label: "سالم‌ترین", icon: "🥗" },
+  {
+    id: "popular",
+    title: "محبوب‌ترین",
+    icon: Flame,
+  },
+  {
+    id: "latest",
+    title: "جدیدترین",
+    icon: Clock3,
+  },
+  {
+    id: "budget",
+    title: "کم‌هزینه‌ترین",
+    icon: Wallet,
+  },
 ];
 
-function RecipeTabs({ activeTab, onChange }: RecipeTabsProps) {
+function RecipeTabs({ activeTab, setActiveTab }: RecipeTabsProps) {
   return (
-    <div className="mb-8 overflow-x-auto">
-      <div className="flex min-w-max gap-3 pb-3">
-        {tabs.map((tab) => (
+    <div className="mb-6 flex flex-wrap items-center gap-3">
+      {tabs.map((tab) => {
+        const Icon = tab.icon;
+        const isActive = activeTab === tab.id;
+
+        return (
           <button
             key={tab.id}
             type="button"
-            onClick={() => onChange(tab.id)}
-            className={`flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold transition-all ${
-              activeTab === tab.id
-                ? "bg-[#526B45] text-white shadow-lg"
-                : "border border-[#E6E0D3] bg-white text-[#817F73] hover:border-[#526B45]"
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-medium transition-all ${
+              isActive
+                ? "bg-[#B85C38] text-white shadow-md"
+                : "border border-[#E9DFD4] bg-[#FFFEFC] text-[#84786F] hover:border-[#B85C38] hover:text-[#B85C38]"
             }`}
           >
-            <span>{tab.icon}</span>
-            {tab.label}
+            <Icon size={18} />
+            <span>{tab.title}</span>
           </button>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }

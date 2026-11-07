@@ -1,50 +1,63 @@
 
+
+import { SlidersHorizontal, Tags, ArrowDownUp } from "lucide-react";
+
 interface RecipeFiltersProps {
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
   sortBy: string;
-  onSortChange: (value: string) => void;
+  setSortBy: (sort: string) => void;
 }
 
+const categories = [
+  { id: "all", title: "همه دسته‌ها" },
+  { id: "Breakfast", title: "صبحانه" },
+  { id: "Lunch", title: "ناهار" },
+  { id: "Dinner", title: "شام" },
+  { id: "Dessert", title: "دسر" },
+  { id: "Snack", title: "میان‌وعده" },
+];
+
 function RecipeFilters({
-  searchTerm,
-  onSearchChange,
+  selectedCategory,
+  setSelectedCategory,
   sortBy,
-  onSortChange,
+  setSortBy,
 }: RecipeFiltersProps) {
   return (
-    <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-
-      {/* Search */}
-      <div className="relative w-full md:max-w-md">
-        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xl">
-          🔍
-        </span>
-
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="جست‌وجوی نام غذا..."
-          className="w-full rounded-2xl border border-[#E6E0D3] bg-white py-4 pr-12 pl-4 text-sm outline-none transition focus:border-[#526B45] focus:ring-2 focus:ring-[#526B45]/10"
-        />
+    <div className="mb-8 flex flex-wrap items-center gap-4 rounded-2xl border border-[#E9DFD4] bg-[#FFFEFC] p-4">
+      <div className="flex items-center gap-2 text-[#84786F]">
+        <SlidersHorizontal size={19} />
+        <span className="text-sm font-semibold">فیلتر دستورها</span>
       </div>
 
-      {/* Sort */}
-      <div className="flex items-center gap-3">
-        <label className="whitespace-nowrap text-sm font-bold text-[#817F73]">
-          مرتب‌سازی:
-        </label>
+      <div className="flex items-center gap-2">
+        <Tags size={17} className="text-[#687653]" />
+
+        <select
+          value={selectedCategory}
+          onChange={(event) => setSelectedCategory(event.target.value)}
+          className="rounded-lg border border-[#E9DFD4] bg-[#FAF7F2] px-3 py-2 text-sm outline-none focus:border-[#B85C38]"
+        >
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.title}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <ArrowDownUp size={17} className="text-[#687653]" />
 
         <select
           value={sortBy}
-          onChange={(e) => onSortChange(e.target.value)}
-          className="w-full rounded-2xl border border-[#E6E0D3] bg-white px-4 py-4 text-sm font-bold text-[#526B45] outline-none focus:border-[#526B45] sm:w-52"
+          onChange={(event) => setSortBy(event.target.value)}
+          className="rounded-lg border border-[#E9DFD4] bg-[#FAF7F2] px-3 py-2 text-sm outline-none focus:border-[#B85C38]"
         >
-          <option value="latest">جدیدترین</option>
           <option value="popular">محبوب‌ترین</option>
-          <option value="cheapest">ارزان‌ترین</option>
-          <option value="quickest">سریع‌ترین</option>
+          <option value="latest">جدیدترین</option>
+          <option value="cheapest">کم‌هزینه‌ترین</option>
         </select>
       </div>
     </div>

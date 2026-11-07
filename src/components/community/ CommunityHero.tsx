@@ -115,13 +115,14 @@ function CommunityHero() {
                 {currentSlide.description}
               </p>
 
+    
               <Link
-                to="/register"
-                className="inline-flex items-center gap-3 rounded-xl bg-[#E98945] px-7 py-4 font-bold text-white transition hover:-translate-y-1 hover:bg-[#d97835]"
-              >
-                {currentSlide.button}
-                <ArrowLeft size={19} />
-              </Link>
+  to="/community#recipes"
+  className="inline-flex items-center gap-3 rounded-xl bg-[#E98945] px-7 py-4 font-bold text-white transition hover:-translate-y-1 hover:bg-[#d97835]"
+>
+  {currentSlide.button}
+  <ArrowLeft size={19} />
+</Link>
             </div>
 
             {/* Food image decoration */}

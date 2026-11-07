@@ -1,145 +1,187 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  ChefHat,
+  Clock,
+  Wallet,
+  Heart,
+  UtensilsCrossed,
+  LoaderCircle,
+  AlertCircle,
+} from "lucide-react";
 
 import CommunityHero from "../components/community/ CommunityHero";
 import RecipeTabs from "../components/community/RecipeTabs";
 import RecipeFilters from "../components/community/RecipeFilters";
 import RecipeList from "../components/community/RecipeList";
 
+import { useFavorites } from "../context/FavoritesContext";
 import type { CommunityRecipe } from "../types/community";
-import type { chicken } from "../types/meal";
 
 function CommunityRecipes() {
   const navigate = useNavigate();
 
-  const [recipes, setRecipes] = useState<CommunityRecipe[]>([]);
-  const [loading, setLoading] = useState(true);
+  const {
+    communityFavorites,
+    addCommunityFavorite,
+    removeCommunityFavorite,
+  } = useFavorites();
 
-  const [activeTab, setActiveTab] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("latest");
-  const [savedRecipes, setSavedRecipes] = useState<number[]>([]);
+  const [recipes, setRecipes] = useState<CommunityRecipe[]>([]);
+  const [activeTab, setActiveTab] = useState("popular");
+  const [sortBy, setSortBy] = useState("popular");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function getRecipes() {
+    async function fetchRecipes() {
       try {
+        setLoading(true);
+        setError("");
+
         const response = await fetch(
-          "https://www.themealdb.com/api/json/v1/1/search.php?s="
+          "https://dummyjson.com/recipes?limit=30"
         );
+
+        if (!response.ok) {
+          throw new Error("دریافت دستورهای آشپزی ناموفق بود.");
+        }
 
         const data = await response.json();
 
-        const meals: chicken[] = data.meals ?? [];
-
-        const formattedRecipes: CommunityRecipe[] = meals.map(
-          (meal, index) => ({
-            id: Number(meal.idMeal),
-            title: meal.strMeal,
-            image: meal.strMealThumb,
+        const formattedRecipes: CommunityRecipe[] = data.recipes.map(
+          (recipe: any) => ({
+            id: recipe.id,
+            title: recipe.name,
+            image: recipe.image,
             author: "آشپز Foodora",
-            time: 20 + index * 5,
-            cost: 80000 + index * 15000,
-            likes: 50 + index * 10,
-            category: meal.strCategory || "غذای خوشمزه",
+            time: recipe.prepTimeMinutes + recipe.cookTimeMinutes,
+            cost: 0,
+            likes: recipe.reviewCount,
+            category: recipe.mealType?.[0] || recipe.cuisine,
           })
         );
 
         setRecipes(formattedRecipes);
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
+      } catch (err) {
+        setError("مشکلی در دریافت دستورهای آشپزی پیش آمده است.");
       } finally {
         setLoading(false);
       }
     }
 
-    getRecipes();
+    fetchRecipes();
   }, []);
+
+  const savedRecipes = communityFavorites.map((recipe) => recipe.id);
+function handleSave(id: number) {
+  const recipe = recipes.find((item) => item.id === id);
+
+  if (!recipe) return;
+
+  const isSaved = savedRecipes.includes(id);
+
+  if (isSaved) {
+    removeCommunityFavorite(id);
+  } else {
+    addCommunityFavorite(recipe);
+  }
+}
+
+  function handleView(id: number) {
+    navigate(`/community/recipes/${id}`);
+  }
 
   const filteredRecipes = useMemo(() => {
     let result = [...recipes];
 
-    result = result.filter((recipe) =>
-      recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (selectedCategory !== "all") {
+      result = result.filter(
+        (recipe) => recipe.category === selectedCategory
+      );
+    }
 
-    if (activeTab === "popular") {
+    if (activeTab === "popular" || sortBy === "popular") {
       result.sort((a, b) => b.likes - a.likes);
-    }
-
-    if (activeTab === "budget") {
+    } else if (activeTab === "latest" || sortBy === "latest") {
+      result.sort((a, b) => b.id - a.id);
+    } else if (activeTab === "budget" || sortBy === "cheapest") {
       result.sort((a, b) => a.cost - b.cost);
-    }
-
-    if (activeTab === "quick") {
-      result.sort((a, b) => a.time - b.time);
-    }
-
-    if (sortBy === "popular") {
-      result.sort((a, b) => b.likes - a.likes);
-    } else if (sortBy === "cheapest") {
-      result.sort((a, b) => a.cost - b.cost);
-    } else if (sortBy === "quickest") {
-      result.sort((a, b) => a.time - b.time);
     }
 
     return result;
-  }, [recipes, searchTerm, activeTab, sortBy]);
-
-  const handleSave = (id: number) => {
-    setSavedRecipes((previous) =>
-      previous.includes(id)
-        ? previous.filter((item) => item !== id)
-        : [...previous, id]
-    );
-  };
-
-  const handleView = (id: number) => {
-    navigate(`/meals/${id}`);
-  };
-
-  if (loading) {
-    return (
-      <div className="flex min-h-96 items-center justify-center bg-[#F7F3E8]">
-        <p className="text-lg font-semibold text-[#526B45]">
-          در حال دریافت دستورهای غذا...
-        </p>
-      </div>
-    );
-  }
+  }, [recipes, activeTab, sortBy, selectedCategory]);
 
   return (
-    <main className="min-h-screen bg-[#F7F3E8]">
+    <main className="min-h-screen bg-[#FAF7F2] text-[#352820]">
       <CommunityHero />
 
-      <section id="recipes" className="mx-auto max-w-7xl px-5 py-12 sm:px-10">
-        <RecipeTabs activeTab={activeTab} onChange={setActiveTab} />
+      <section
+        id="recipes"
+        className="mx-auto max-w-7xl px-4 py-12 md:px-8"
+      >
+        <div className="mb-8 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <ChefHat size={26} className="text-[#B85C38]" />
 
-        <div className="mt-8">
-          <RecipeFilters
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-          />
+            <h1 className="text-2xl font-bold md:text-3xl">
+              دستورهای آشپزی کاربران
+            </h1>
+          </div>
+
+          <p className="text-sm text-[#84786F]">
+            مجموعه‌ای از دستورهای آشپزی برای تجربه طعم‌های جدید
+          </p>
+
+          <div className="flex items-center gap-2 text-sm text-[#687653]">
+            <UtensilsCrossed size={17} />
+
+            <span>
+              {recipes.length} دستور آشپزی
+            </span>
+          </div>
         </div>
 
-        <div className="mb-6 mt-8 flex items-center justify-between">
-          <h2 className="text-2xl font-black text-[#292D26]">
-            دستورهای آشپزی
-          </h2>
-
-          <span className="text-sm text-[#817F73]">
-            {filteredRecipes.length} دستور
-          </span>
-        </div>
-
-        <RecipeList
-          recipes={filteredRecipes}
-          savedRecipes={savedRecipes}
-          onSave={handleSave}
-          onView={handleView}
+        <RecipeTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
         />
+
+        <RecipeFilters
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+        />
+
+        {loading && (
+          <div className="flex items-center justify-center gap-3 py-20 text-[#B85C38]">
+            <LoaderCircle
+              size={22}
+              className="animate-spin"
+            />
+
+            <span>در حال دریافت دستورهای آشپزی...</span>
+          </div>
+        )}
+
+        {error && (
+          <div className="flex items-center justify-center gap-2 py-12 text-red-600">
+            <AlertCircle size={20} />
+
+            <p>{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && (
+          <RecipeList
+            recipes={filteredRecipes}
+            savedRecipes={savedRecipes}
+            onSave={handleSave}
+            onView={handleView}
+          />
+        )}
       </section>
     </main>
   );
