@@ -1,12 +1,12 @@
 # 🍽️ Foodora
+
 ## 📸 Screenshots
 
 ### Home Page
 ![Home Page](./screenshots/home.png)
 
 ### Recipes
-
-![Login](./screenshots/login.png)
+![Recipes](./screenshots/recipes.png)
 
 ### Recipe Details
 ![Recipe Details](./screenshots/recipe-details.png)
@@ -14,24 +14,30 @@
 ### Community
 ![Community](./screenshots/community.png)
 
-### Dashbord
-![Top Chefs](./screenshots/dashbord.png)
+### Dashboard
+![Dashboard](./screenshots/dashbord.png)
 
 ### Login
-![Recipes](./screenshots/recipes.png)
-### A Modern Cooking & Recipe Sharing Platform
+![Login](./screenshots/login.png)
 
-Foodora is a modern, responsive cooking platform built with **React, TypeScript, and Vite**. It provides a friendly space for discovering recipes, exploring cooking ideas, and sharing culinary experiences.
+---
+
+## 🍳 A Modern Cooking & Recipe Sharing Platform
+
+Foodora is a modern and responsive cooking platform built with **React, TypeScript, and Vite**.
+
+It provides an intuitive environment for discovering recipes, exploring different cuisines, and sharing culinary experiences.
 
 ## ✨ Features
 
 - Browse recipes across different food categories
-- View detailed recipe information
-- Search and explore recipes
+- Explore detailed recipe information
+- Search recipes dynamically
 - Discover top chefs
 - Join the cooking community
 - Participate in weekly cooking challenges
 - Read and share recipe reviews
+- Manage favorite recipes
 - User registration and login interfaces
 - Responsive design for desktop and mobile devices
 
@@ -43,6 +49,7 @@ Foodora is a modern, responsive cooking platform built with **React, TypeScript,
 - Tailwind CSS
 - React Router
 - Lucide React
+- TheMealDB API
 
 ## 🚀 Getting Started
 
@@ -52,7 +59,7 @@ Foodora is a modern, responsive cooking platform built with **React, TypeScript,
 git clone https://github.com/Safaeii/Foodora.git
 ```
 
-### 2. Navigate to the project
+### 2. Navigate to the project directory
 
 ```bash
 cd Foodora
@@ -70,23 +77,29 @@ npm install
 npm run dev
 ```
 
-Open the local URL shown in your terminal to view the application.
+Open the local URL displayed in your terminal.
 
 ## 📁 Project Structure
 
 ```text
 src/
-├── components/
-├── pages/
 ├── assets/
+├── components/
+│   ├── community/
+│   └── dashboard/
+├── context/
+├── hooks/
+├── pages/
 ├── types/
 ├── App.tsx
+├── App.css
+├── index.css
 └── main.tsx
 ```
 
 ## 🎨 Design
 
-Foodora uses a warm, modern visual identity with a carefully selected color palette, clean layouts, and responsive components to create an enjoyable cooking experience.
+Foodora features a warm and modern visual identity, combining a carefully selected color palette, clean layouts, and responsive components to provide an enjoyable cooking experience.
 
 ## 👩‍💻 Developer
 
