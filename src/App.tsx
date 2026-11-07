@@ -26,6 +26,8 @@ import WeeklyChallenge from "./pages/WeeklyChallenge";
 
 import TopChefs from "./pages/TopChefs";
 
+import Favorites from "./pages/Favorites";
+
 function App() {
   return (
     <>
@@ -63,7 +65,8 @@ function App() {
 <Route path="/weekly-challenge" element={<WeeklyChallenge />} />
 
 <Route path="/TopChefs" element={<TopChefs />} />
-      </Routes>
+<Route path="/favorites" element={<Favorites />} />
+</Routes>
      
       <Footer />
     </>

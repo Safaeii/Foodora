@@ -1,6 +1,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import useFavorites from "../hooks/useFavorites";
 import {
   ChefHat,
   Search,
@@ -13,6 +14,7 @@ import {
   Salad,
   Fish,
   CakeSlice,
+  Heart,
 
 } from "lucide-react";
 
@@ -42,7 +44,8 @@ export default function Header() {
     setSearch("");
     setIsOpen(false);
   }
-
+const { favorites } = useFavorites();
+const favoritesCount = favorites.length;
   return (
     <header dir="rtl" className="sticky top-0 z-50 px-4 pt-4">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 rounded-full border border-white/80 bg-[#FFFEFC]/90 px-5 py-3 shadow-[0_12px_35px_rgba(62,66,43,0.10)] backdrop-blur-2xl lg:px-6">
@@ -132,7 +135,17 @@ export default function Header() {
           >
         تجربه آشپزها   
           </a>
+          <Link to="/favorites" className="relative">
+  <Heart size={22} className="text-[#B85C38]" />
+
+  {favoritesCount > 0 && (
+    <span className="absolute -top-2 -right-2 rounded-full bg-[#B85C38] px-2 py-0.5 text-xs text-white">
+      {favoritesCount}
+    </span>
+  )}
+</Link>
         </nav>
+
 
         {/* Desktop Search */}
         <form
