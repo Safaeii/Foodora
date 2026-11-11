@@ -3,33 +3,47 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import type { Meal } from "../types/meal";
 import RecipeReviews from "../components/RecipeReviews";
-
+import { getMealDetails } from "../services/mealService";
 function MealDetails() {
   const { id } = useParams();
   const [meal, setMeal] = useState<Meal | null>(null);
-  const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(!id);
 
-  useEffect(() => {
-    async function getMealDetails() {
-      try {
-        setLoading(true);
+useEffect(() => {
+  if (!id) return;
 
-        const response = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-        );
+  const mealId = id;
+  let isActive = true;
 
-        const data = await response.json();
-        setMeal(data.meals?.[0] ?? null);
-      } catch (error) {
-        console.error("خطا در دریافت اطلاعات غذا:", error);
+  async function loadMealDetails() {
+    setLoading(true);
+
+    try {
+      const data = await getMealDetails(mealId);
+
+      if (isActive) {
+        setMeal(data);
+      }
+    } catch (error) {
+      console.error("خطا در دریافت اطلاعات غذا:", error);
+
+      if (isActive) {
         setMeal(null);
-      } finally {
+      }
+    } finally {
+      if (isActive) {
         setLoading(false);
       }
     }
+  }
 
-    if (id) getMealDetails();
-  }, [id]);
+  loadMealDetails();
+
+  return () => {
+    isActive = false;
+  };
+}, [id]);
+
 
   if (loading) {
     return (

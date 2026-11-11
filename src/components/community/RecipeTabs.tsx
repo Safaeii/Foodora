@@ -1,10 +1,10 @@
 
-
 import { Flame, Clock3, Wallet } from "lucide-react";
+import type { RecipeTab } from "../../types/community";
 
 interface RecipeTabsProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab: RecipeTab;
+  setActiveTab: (tab: RecipeTab) => void;
 }
 
 const tabs = [
@@ -23,7 +23,11 @@ const tabs = [
     title: "کم‌هزینه‌ترین",
     icon: Wallet,
   },
-];
+] satisfies {
+  id: RecipeTab;
+  title: string;
+  icon: typeof Flame;
+}[];
 
 function RecipeTabs({ activeTab, setActiveTab }: RecipeTabsProps) {
   return (

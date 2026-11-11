@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import FavoritesContext from "../context/FavoritesContext";
 
-
-function useFavorites() {
+export function useFavorites() {
   const context = useContext(FavoritesContext);
 
   if (!context) {
@@ -11,5 +10,3 @@ function useFavorites() {
 
   return context;
 }
-
-export default useFavorites;

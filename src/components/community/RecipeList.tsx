@@ -1,4 +1,4 @@
-import RecipeCard from "./ RecipeCard";
+import RecipeCard from "./RecipeCard";
 
 export interface Recipe {
   id: number;

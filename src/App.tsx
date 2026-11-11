@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 
-import Chicken from "./components/chicken";
+import Chicken from "./components/ChickenMeals";
 import BeefMeals from "./components/BeefMeals";
 import SeafoodMeals from "./components/SeafoodMeals";
 import VegetarianMeals from "./components/VegetarianMeals";
@@ -15,7 +15,7 @@ import MealDetails from "./pages/MealDetails";
 import SearchResults from "./pages/SearchResults";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 
 import CommunityRecipes from "./pages/CommunityRecipes";
 import CommunityRecipeDetails from "./pages/CommunityRecipeDetails";

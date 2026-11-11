@@ -8,30 +8,20 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-import CommunityHero from "../components/community/ CommunityHero";
-import RecipeTabs from "../components/community/RecipeTabs";
+import CommunityHero from "../components/community/CommunityHero";
+import RecipeTabs from "../components/community/RecipeTabs"  
 import RecipeFilters from "../components/community/RecipeFilters";
 import RecipeList from "../components/community/RecipeList";
 
-import { useFavorites } from "../context/useFavorites";
-import type { CommunityRecipe } from "../types/community";
+import { useFavorites } from "../hooks/useFavorites";
+import { getCommunityRecipes } from "../services/communityService";
 
-// Define the API recipe structure
-interface ApiRecipe {
-  id: number;
-  name: string;
-  image: string;
-  prepTimeMinutes: number;
-  cookTimeMinutes: number;
-  reviewCount: number;
-  mealType?: string[];
-  cuisine: string;
-}
-
-// Define the API response structure
-interface ApiRecipesResponse {
-  recipes: ApiRecipe[];
-}
+import type {
+  CommunityRecipe,
+  RecipeTab,
+  RecipeSort,
+  CommunityMealCategory,
+} from "../types/community";
 
 function CommunityRecipes() {
   const navigate = useNavigate();
@@ -42,55 +32,60 @@ function CommunityRecipes() {
     removeCommunityFavorite,
   } = useFavorites();
 
+  // Recipes state
   const [recipes, setRecipes] = useState<CommunityRecipe[]>([]);
-  const [activeTab, setActiveTab] = useState("popular");
-  const [sortBy, setSortBy] = useState("popular");
-  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  // Filter states
+  const [activeTab, setActiveTab] =
+    useState<RecipeTab>("popular");
+
+  const [sortBy, setSortBy] =
+    useState<RecipeSort>("popular");
+
+  const [selectedCategory, setSelectedCategory] =
+    useState<CommunityMealCategory>("all");
+
+  // Loading and error states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Fetch community recipes
   useEffect(() => {
+    let isActive = true;
+
     async function fetchRecipes() {
       try {
-        setLoading(true);
-        setError("");
+        const data = await getCommunityRecipes();
 
-        const response = await fetch(
-          "https://dummyjson.com/recipes?limit=30"
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch recipes.");
+        if (isActive) {
+          setRecipes(data);
         }
+      } catch (error) {
+        console.error("Error fetching community recipes:", error);
 
-        const data: ApiRecipesResponse = await response.json();
-
-        const formattedRecipes: CommunityRecipe[] = data.recipes.map(
-          (recipe: ApiRecipe) => ({
-            id: recipe.id,
-            title: recipe.name,
-            image: recipe.image,
-            author: "آشپز Foodora",
-            time: recipe.prepTimeMinutes + recipe.cookTimeMinutes,
-            cost: 0,
-            likes: recipe.reviewCount,
-            category: recipe.mealType?.[0] || recipe.cuisine,
-          })
-        );
-
-        setRecipes(formattedRecipes);
-      } catch {
-        setError("مشکلی در دریافت دستورهای آشپزی پیش آمده است.");
+        if (isActive) {
+          setError("مشکلی در دریافت دستورهای آشپزی پیش آمده است.");
+        }
       } finally {
-        setLoading(false);
+        if (isActive) {
+          setLoading(false);
+        }
       }
     }
 
     fetchRecipes();
+
+    return () => {
+      isActive = false;
+    };
   }, []);
 
-  const savedRecipes = communityFavorites.map((recipe) => recipe.id);
+  // Get saved recipe IDs
+  const savedRecipes = communityFavorites.map(
+    (recipe) => recipe.id
+  );
 
+  // Save or remove favorite
   function handleSave(id: number) {
     const recipe = recipes.find((item) => item.id === id);
 
@@ -105,29 +100,56 @@ function CommunityRecipes() {
     }
   }
 
+  // Navigate to recipe details
   function handleView(id: number) {
     navigate(`/community/recipes/${id}`);
   }
 
+  // Handle tab changes
+  function handleTabChange(tab: RecipeTab) {
+    setActiveTab(tab);
+
+    const sortOptions: Record<RecipeTab, RecipeSort> = {
+      popular: "popular",
+      latest: "latest",
+      budget: "cheapest",
+    };
+
+    setSortBy(sortOptions[tab]);
+  }
+
+  // Filter and sort recipes
   const filteredRecipes = useMemo(() => {
     let result = [...recipes];
 
+    // Filter by category
     if (selectedCategory !== "all") {
       result = result.filter(
         (recipe) => recipe.category === selectedCategory
       );
     }
 
-    if (activeTab === "popular" || sortBy === "popular") {
-      result.sort((a, b) => b.likes - a.likes);
-    } else if (activeTab === "latest" || sortBy === "latest") {
-      result.sort((a, b) => b.id - a.id);
-    } else if (activeTab === "budget" || sortBy === "cheapest") {
-      result.sort((a, b) => a.cost - b.cost);
+    // Sort recipes
+    switch (sortBy) {
+      case "popular":
+        result.sort((a, b) => b.likes - a.likes);
+        break;
+
+      case "latest":
+        result.sort((a, b) => b.id - a.id);
+        break;
+
+      case "cheapest":
+        result.sort((a, b) => a.cost - b.cost);
+        break;
+
+      case "quickest":
+        result.sort((a, b) => a.time - b.time);
+        break;
     }
 
     return result;
-  }, [recipes, activeTab, sortBy, selectedCategory]);
+  }, [recipes, sortBy, selectedCategory]);
 
   return (
     <main className="min-h-screen bg-[#FAF7F2] text-[#352820]">
@@ -139,7 +161,10 @@ function CommunityRecipes() {
       >
         <div className="mb-8 flex flex-col gap-3">
           <div className="flex items-center gap-3">
-            <ChefHat size={26} className="text-[#B85C38]" />
+            <ChefHat
+              size={26}
+              className="text-[#B85C38]"
+            />
 
             <h1 className="text-2xl font-bold md:text-3xl">
               دستورهای آشپزی کاربران
@@ -152,14 +177,13 @@ function CommunityRecipes() {
 
           <div className="flex items-center gap-2 text-sm text-[#687653]">
             <UtensilsCrossed size={17} />
-
             <span>{recipes.length} دستور آشپزی</span>
           </div>
         </div>
 
         <RecipeTabs
           activeTab={activeTab}
-          setActiveTab={setActiveTab}
+          setActiveTab={handleTabChange}
         />
 
         <RecipeFilters
@@ -171,7 +195,10 @@ function CommunityRecipes() {
 
         {loading && (
           <div className="flex items-center justify-center gap-3 py-20 text-[#B85C38]">
-            <LoaderCircle size={22} className="animate-spin" />
+            <LoaderCircle
+              size={22}
+              className="animate-spin"
+            />
             <span>در حال دریافت دستورهای آشپزی...</span>
           </div>
         )}

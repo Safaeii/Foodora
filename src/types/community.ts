@@ -18,6 +18,16 @@ export type RecipeCategory =
   | "quick"
   | "healthy";
 
+export type RecipeTab = "popular" | "latest" | "budget";
+
+export type CommunityMealCategory =
+  | "all"
+  | "Breakfast"
+  | "Lunch"
+  | "Dinner"
+  | "Dessert"
+  | "Snack";
+
 export type RecipeSort =
   | "latest"
   | "popular"

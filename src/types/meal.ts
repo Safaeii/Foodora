@@ -1,7 +1,4 @@
 
-
-
-
 export interface Meal {
   idMeal: string;
   strMeal: string;
@@ -11,36 +8,13 @@ export interface Meal {
   strInstructions?: string;
 }
 
-export interface chicken {
-  idMeal: string;
-  strMeal: string;
+export interface DetailedMeal extends Meal {
   strCategory: string;
   strArea: string;
-  strMealThumb: string;
   strInstructions: string;
 }
 
-export interface BeefMeal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-}
-
-
-export interface SeafoodMeal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-}
-
-export interface VegetarianMeal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-}
-
-export interface DessertMeal {
-  idMeal: string;
-  strMeal: string;
-  strMealThumb: string;
-}
+export type BeefMeal = Meal;
+export type SeafoodMeal = Meal;
+export type VegetarianMeal = Meal;
+export type DessertMeal = Meal;

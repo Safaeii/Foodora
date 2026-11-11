@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import type { Meal } from "../types/meal";
+import { searchMeals } from "../services/mealService";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -11,29 +12,37 @@ function SearchResults() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!query.trim()) {
-      return;
-    }
+    if (!query.trim()) return;
 
-    const fetchMeals = async () => {
+    let isActive = true;
+
+    async function fetchMeals() {
       setLoading(true);
 
       try {
-        const response = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`
-        );
+        const data = await searchMeals(query);
 
-        const data = await response.json();
-        setMeals(data.meals || []);
+        if (isActive) {
+          setMeals(data);
+        }
       } catch (error) {
         console.error("خطا در جست‌وجوی غذا:", error);
-        setMeals([]);
+
+        if (isActive) {
+          setMeals([]);
+        }
       } finally {
-        setLoading(false);
+        if (isActive) {
+          setLoading(false);
+        }
       }
-    };
+    }
 
     fetchMeals();
+
+    return () => {
+      isActive = false;
+    };
   }, [query]);
 
   const displayedMeals = query.trim() ? meals : [];
