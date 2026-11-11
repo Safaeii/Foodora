@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import type { Meal } from "../types/meal";
@@ -11,7 +12,6 @@ function SearchResults() {
 
   useEffect(() => {
     if (!query.trim()) {
-      setMeals([]);
       return;
     }
 
@@ -36,6 +36,8 @@ function SearchResults() {
     fetchMeals();
   }, [query]);
 
+  const displayedMeals = query.trim() ? meals : [];
+
   return (
     <main className="mx-auto max-w-7xl px-6 py-10">
       <h1 className="mb-6 text-2xl font-bold">
@@ -44,12 +46,12 @@ function SearchResults() {
 
       {loading && <p>در حال جست‌وجو...</p>}
 
-      {!loading && meals.length === 0 && (
+      {!loading && displayedMeals.length === 0 && (
         <p>غذایی پیدا نشد.</p>
       )}
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {meals.map((meal) => (
+        {displayedMeals.map((meal) => (
           <Link
             key={meal.idMeal}
             to={`/meals/${meal.idMeal}`}

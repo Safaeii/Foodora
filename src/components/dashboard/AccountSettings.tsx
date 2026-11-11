@@ -14,9 +14,74 @@ import {
   Save,
   LogOut,
   ChevronLeft,
-    ChefHat,
+  ChefHat,
 } from "lucide-react";
 
+// Toggle component
+type ToggleProps = {
+  checked: boolean;
+  onChange: () => void;
+};
+
+function Toggle({ checked, onChange }: ToggleProps) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      onClick={onChange}
+      className={`relative h-6 w-11 shrink-0 rounded-full transition ${
+        checked ? "bg-[#526B45]" : "bg-[#D8D4CA]"
+      }`}
+    >
+      <span
+        className={`absolute top-1 size-4 rounded-full bg-white shadow transition-all ${
+          checked ? "right-1" : "right-6"
+        }`}
+      />
+    </button>
+  );
+}
+
+// SettingRow component
+type SettingRowProps = {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  checked: boolean;
+  onChange: () => void;
+};
+
+function SettingRow({
+  icon: Icon,
+  title,
+  description,
+  checked,
+  onChange,
+}: SettingRowProps) {
+  return (
+    <div className="flex items-center justify-between gap-4 border-b border-[#E6E0D3] py-5 last:border-0">
+      <div className="flex min-w-0 items-center gap-3">
+        <div className="rounded-xl bg-[#F7F3E8] p-3 text-[#526B45]">
+          <Icon size={20} />
+        </div>
+
+        <div>
+          <h4 className="text-sm font-bold text-[#292D26]">
+            {title}
+          </h4>
+          <p className="mt-1 text-xs leading-6 text-[#817F73]">
+            {description}
+          </p>
+        </div>
+      </div>
+
+      <Toggle checked={checked} onChange={onChange} />
+    </div>
+  );
+}
+
+// Main component
 function AccountSettings() {
   const [notifications, setNotifications] = useState({
     email: true,
@@ -40,6 +105,7 @@ function AccountSettings() {
       ...previous,
       [key]: !previous[key],
     }));
+
     setSaved(false);
   };
 
@@ -48,74 +114,18 @@ function AccountSettings() {
       ...previous,
       [key]: !previous[key],
     }));
+
     setSaved(false);
   };
 
-  const Toggle = ({
-    checked,
-    onChange,
-  }: {
-    checked: boolean;
-    onChange: () => void;
-  }) => (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={onChange}
-      className={`relative h-6 w-11 shrink-0 rounded-full transition ${
-        checked ? "bg-[#526B45]" : "bg-[#D8D4CA]"
-      }`}
-    >
-      <span
-        className={`absolute top-1 size-4 rounded-full bg-white shadow transition-all ${
-          checked ? "right-1" : "right-6"
-        }`}
-      />
-    </button>
-  );
-
-  const SettingRow = ({
-    icon: Icon,
-    title,
-    description,
-    checked,
-    onChange,
-  }: {
-    icon: React.ElementType;
-    title: string;
-    description: string;
-    checked: boolean;
-    onChange: () => void;
-  }) => (
-    <div className="flex items-center justify-between gap-4 border-b border-[#E6E0D3] py-5 last:border-0">
-      <div className="flex min-w-0 items-center gap-3">
-        <div className="rounded-xl bg-[#F7F3E8] p-3 text-[#526B45]">
-          <Icon size={20} />
-        </div>
-
-        <div>
-          <h4 className="text-sm font-bold text-[#292D26]">
-            {title}
-          </h4>
-          <p className="mt-1 text-xs leading-6 text-[#817F73]">
-            {description}
-          </p>
-        </div>
-      </div>
-
-      <Toggle checked={checked} onChange={onChange} />
-    </div>
-  );
-
   return (
     <section className="space-y-7">
-
       {/* Header */}
       <div>
         <h2 className="text-2xl font-black text-[#292D26]">
           تنظیمات حساب
         </h2>
+
         <p className="mt-2 text-sm text-[#817F73]">
           تنظیمات حساب کاربری و تجربه استفاده از Foodora رو مدیریت کن.
         </p>
@@ -364,10 +374,8 @@ function AccountSettings() {
           </button>
         </div>
       </div>
-
     </section>
   );
 }
 
 export default AccountSettings;
-

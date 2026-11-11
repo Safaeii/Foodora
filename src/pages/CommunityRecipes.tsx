@@ -1,10 +1,8 @@
+
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ChefHat,
-  Clock,
-  Wallet,
-  Heart,
   UtensilsCrossed,
   LoaderCircle,
   AlertCircle,
@@ -15,8 +13,25 @@ import RecipeTabs from "../components/community/RecipeTabs";
 import RecipeFilters from "../components/community/RecipeFilters";
 import RecipeList from "../components/community/RecipeList";
 
-import { useFavorites } from "../context/FavoritesContext";
+import { useFavorites } from "../context/useFavorites";
 import type { CommunityRecipe } from "../types/community";
+
+// Define the API recipe structure
+interface ApiRecipe {
+  id: number;
+  name: string;
+  image: string;
+  prepTimeMinutes: number;
+  cookTimeMinutes: number;
+  reviewCount: number;
+  mealType?: string[];
+  cuisine: string;
+}
+
+// Define the API response structure
+interface ApiRecipesResponse {
+  recipes: ApiRecipe[];
+}
 
 function CommunityRecipes() {
   const navigate = useNavigate();
@@ -45,13 +60,13 @@ function CommunityRecipes() {
         );
 
         if (!response.ok) {
-          throw new Error("دریافت دستورهای آشپزی ناموفق بود.");
+          throw new Error("Failed to fetch recipes.");
         }
 
-        const data = await response.json();
+        const data: ApiRecipesResponse = await response.json();
 
         const formattedRecipes: CommunityRecipe[] = data.recipes.map(
-          (recipe: any) => ({
+          (recipe: ApiRecipe) => ({
             id: recipe.id,
             title: recipe.name,
             image: recipe.image,
@@ -64,7 +79,7 @@ function CommunityRecipes() {
         );
 
         setRecipes(formattedRecipes);
-      } catch (err) {
+      } catch {
         setError("مشکلی در دریافت دستورهای آشپزی پیش آمده است.");
       } finally {
         setLoading(false);
@@ -75,19 +90,20 @@ function CommunityRecipes() {
   }, []);
 
   const savedRecipes = communityFavorites.map((recipe) => recipe.id);
-function handleSave(id: number) {
-  const recipe = recipes.find((item) => item.id === id);
 
-  if (!recipe) return;
+  function handleSave(id: number) {
+    const recipe = recipes.find((item) => item.id === id);
 
-  const isSaved = savedRecipes.includes(id);
+    if (!recipe) return;
 
-  if (isSaved) {
-    removeCommunityFavorite(id);
-  } else {
-    addCommunityFavorite(recipe);
+    const isSaved = savedRecipes.includes(id);
+
+    if (isSaved) {
+      removeCommunityFavorite(id);
+    } else {
+      addCommunityFavorite(recipe);
+    }
   }
-}
 
   function handleView(id: number) {
     navigate(`/community/recipes/${id}`);
@@ -137,9 +153,7 @@ function handleSave(id: number) {
           <div className="flex items-center gap-2 text-sm text-[#687653]">
             <UtensilsCrossed size={17} />
 
-            <span>
-              {recipes.length} دستور آشپزی
-            </span>
+            <span>{recipes.length} دستور آشپزی</span>
           </div>
         </div>
 
@@ -157,11 +171,7 @@ function handleSave(id: number) {
 
         {loading && (
           <div className="flex items-center justify-center gap-3 py-20 text-[#B85C38]">
-            <LoaderCircle
-              size={22}
-              className="animate-spin"
-            />
-
+            <LoaderCircle size={22} className="animate-spin" />
             <span>در حال دریافت دستورهای آشپزی...</span>
           </div>
         )}
@@ -169,7 +179,6 @@ function handleSave(id: number) {
         {error && (
           <div className="flex items-center justify-center gap-2 py-12 text-red-600">
             <AlertCircle size={20} />
-
             <p>{error}</p>
           </div>
         )}

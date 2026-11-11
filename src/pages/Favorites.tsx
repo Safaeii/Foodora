@@ -8,7 +8,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-import { useFavorites } from "../context/FavoritesContext";
+import { useFavorites } from "../context/useFavorites";
 
 function Favorites() {
   const {

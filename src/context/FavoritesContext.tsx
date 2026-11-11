@@ -1,11 +1,11 @@
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import type { ReactNode, Dispatch, SetStateAction } from "react";
 
 import type { Meal } from "../types/meal";
 import type { CommunityRecipe } from "../types/community";
 
-// نوع مشترک علاقه‌مندی‌ها
+// Shared type for both favorite categories
 export type FavoriteItem =
   | {
       type: "meal";
@@ -16,19 +16,19 @@ export type FavoriteItem =
       data: CommunityRecipe;
     };
 
-interface FavoritesContextType {
-  // غذاهای معمولی
+export interface FavoritesContextType {
+  // Regular meals
   favorites: Meal[];
   setFavorites: Dispatch<SetStateAction<Meal[]>>;
   addFavorite: (meal: Meal) => void;
   removeFavorite: (id: string) => void;
 
-  // دستورهای آشپزی کاربران
+  // Community recipes
   communityFavorites: CommunityRecipe[];
   addCommunityFavorite: (recipe: CommunityRecipe) => void;
   removeCommunityFavorite: (id: number) => void;
 
-  // لیست مشترک هر دو نوع
+  // Combined list of both favorite types
   allFavorites: FavoriteItem[];
 }
 
@@ -78,7 +78,7 @@ export function FavoritesProvider({
     );
   }
 
-  // ترکیب هر دو لیست در یک لیست مشترک
+  // Combine both favorite lists
   const allFavorites: FavoriteItem[] = [
     ...favorites.map((meal) => ({
       type: "meal" as const,
@@ -106,16 +106,4 @@ export function FavoritesProvider({
       {children}
     </FavoritesContext.Provider>
   );
-}
-
-export function useFavorites() {
-  const context = useContext(FavoritesContext);
-
-  if (!context) {
-    throw new Error(
-      "useFavorites must be used inside FavoritesProvider"
-    );
-  }
-
-  return context;
 }
